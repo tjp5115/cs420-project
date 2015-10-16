@@ -1,0 +1,2 @@
+scikit install and information:
+	http://scikit-learn.sourceforge.net/dev/install.html
