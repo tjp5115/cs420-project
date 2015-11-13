@@ -1,8 +1,6 @@
 __author__ = 'Crystal'
 import operator
-
 import json
-
 with open("train.json") as data_file:
     data = json.load(data_file)
 counterCuis = dict()

@@ -1,0 +1,16 @@
+IDE:
+	Pycharm-4.5.4  (Student version)
+
+interpreter:
+	python 2.7 32bit
+
+Packages installed:
+	Orange	2.7.8	2.7.8
+	PIL	1.1.7	1.1.6
+	fuzzywuzzy	0.7.0	0.7.0
+	numpy	1.8.1	1.10.1
+	pip	7.0.1	7.1.2
+	python-Levenshtein	0.12.0	0.12.0 
+	pywin32	218	214
+	scipy	0.13.3	0.16.1
+	setuptools	16.0	18.5
