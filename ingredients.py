@@ -1,44 +1,45 @@
-__author__ = 'Crystal'
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
-import operator
+__author__ = 'Tyler Paulsen'
 import json
-def trim():
-        sorted_x = sorted(ingred.items(), key=lambda x:x[1])
-        print(len(sorted_x))
-        for i in sorted_x:
-                if i[1] > 1:
-                        break
-                del ingred[i[0]]
-        print(len(ingred))
+import timeit
+from Cuisine import Cuisine
 
-with open('train.json')as data_file:
-        data = json.load(data_file)
-indian = []
-for da in data:
-        if da['cuisine'] == 'indian':
-                indian.append(da)
-ingred = dict()
+def get_elapsed_time():
+    elapsed = timeit.default_timer() - start_time
+    m, s = divmod(elapsed, 60)
+    h, m = divmod(m, 60)
+    return "%d:%02d:%02d" % (h, m, s)
+
+
+# global vars
+start_time = timeit.default_timer()
+file = 'train.json'
+cuisine = {}
 c = 0
-for recipe in indian:
+
+print("Processing json file: "+file)
+with open(file)as data_file:
+        data = json.load(data_file)
+        
+for recipe in data:
+        name = recipe['cuisine'].strip()
+        if not cuisine.has_key(name):
+                cuisine[name] = Cuisine(name)
+
         for ingredient in recipe['ingredients']:
-                c += 1
-                # trim the list to fuzzy search every so often.
-                if c % 1000 == 0 and len(ingred) > 100:
-                        print("c=",c)
-                        trim()
+            cuisine[name].add_ingredient(ingredient)
+        c += 1
+        if c % 5000 == 0:
+            print("Current time counter: "+get_elapsed_time())
 
-                choice = process.extract(ingredient,ingred.keys())
-                #print(ingredient + " " +str(choice))
-                if len(choice) == 0:
-                        ingred[ingredient] = 1
-                elif choice[0][1] > 90:
-                        ingred[choice[0][0]] += 1
-                else:
-                        ingred[ingredient] = 1
+print("Total Number of Recipes: " + str(c))
+print("Creating Json file with results: Ingredients.json")
+cuisine_json = []
+for name in cuisine:
+    cuisine_json.append(cuisine[name].json_dump())
+    
+with open("Ingredients.json","w") as outfile:
+    json.dump(cuisine_json,outfile,indent=4,sort_keys=True)
 
-print(c)
-print(ingred)
-sorted_x = sorted(ingred.items(), key=lambda x:x[1],reverse=True)
-for x in sorted_x:
-        print(x)
+print("Total time of execution: "+get_elapsed_time())
+
+
