@@ -20,6 +20,7 @@ cuisines = []
 for i in range(len(data)):
     cuisines.append(Cuisine().init_json(data[i]))
     cuisines[i].trim()
+
 cuisine_1 = cuisines[0]
 del cuisines[0]
 for ingredient in cuisine_1.ingredients.keys():
@@ -37,6 +38,7 @@ for ingredient in cuisine_1.ingredients.keys():
 
     if float(similar/count) >= .85:
         print("Removing Ingredient: " + ingredient)
+        cuisine_1.remove_ingredient(ingredient)
         for cuisine in cuisines:
             cuisine.remove_ingredient(ingredient)
 
@@ -72,7 +74,7 @@ cuisine_json = []
 for i in range(len(cuisines)):
     cuisine_json.append(cuisines[i].json_dump())
 
-with open("Ingredients_Cleaned_2.json","w") as outfile:
+with open("Ingredients_Cleaned.json","w") as outfile:
     json.dump(cuisine_json,outfile,indent=4,sort_keys=True)
 
 

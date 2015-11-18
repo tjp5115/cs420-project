@@ -20,6 +20,25 @@ class Cuisine:
                 break
             del self.ingredients[ ingredient[0] ]
 
+    def ingredient_percent(self,ingredient):
+        if not self.ingredients.has_key(ingredient):
+            return None
+        return float(self.ingredients[ingredient]) / self.ingredients_added
+
+    def trim_limit(self,limit):
+        self.ingredients = dict(sorted(self.ingredients.items(), key=lambda x:x[1],reverse=True)[:limit])
+        self.ingredients_added = sum(self.ingredients.values())
+        return
+        count = 0
+        total = 0
+        for ingredient in sorted_ingredients:
+            if limit <= float(total)/self.ingredients_added:
+                self.ingredients = dict(sorted_ingredients[:count])
+            count += 1
+            total += ingredient[1]
+
+        self.ingredients_added = sum(self.ingredients.values())
+
     def add_ingredient(self,ingredient):
         self.ingredients_added += 1
         # trim the list to fuzzy search every so often.
