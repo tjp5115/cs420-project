@@ -4,123 +4,96 @@ import json
 import math
 from fuzzywuzzy import process
 
+global G_TOTAL_RECIPES
+
 # Opens the list of cleaned ingredients, returns the map of cuisines
 def open_cuisines():
-    file = "Ingredients_Cleaned.json"
+    filename = "Ingredients_Cleaned.json"
     cuisines = []
-    with open(file) as data_file:
+    # Why?  What does this do? No idea.
+    limit = 10
+    with open(filename) as data_file:
         data = json.load(data_file)
     for i in range(len(data)):
         cuisines.append(Cuisine().init_json(data[i]))
         cuisines[i].trim_limit(limit)
     return cuisines
 
-
-def evaluate_choice(choice,best_choice,cuisine):
-    c1 = cuisine.ingredient_percent(choice[0])
-    c2 = best_choice[4].ingredient_percent(best_choice[3])
-    if c1 < c2:
-        return best_choice
+# Match a provided ingredient with an ingredient included in the cuisine
+# provided
+# Returns none if no good match, matched ingredient otherwise
+def match_ingredient(ingredient, cuisine):
+    G_ING_SIMILARITY_THRESHOLD = 80
+    match = process.extract(ingredient, cuisine.ingredients.keys(), limit=1)
+    if match[0][1] >= G_ING_SIMILARITY_THRESHOLD:
+        return match[0][0]
     else:
-        return (cuisine.name ,choice[1],cuisine.ingredient_percent(choice[0])*choice[1],choice[0],cuisine)
-
-def best_choice(choice,cuisine):
-    best = choice[0]
-    i = 0
-    while best[1] == choice[i][1] and len(choice) < i:
-        if cuisine.ingredient_percent(best[0]) < cuisine.ingredient_percent(choice[i][0]):
-            best = choice[i]
-        i += 1
-    return best
-
-def main():
-    for unclassified in train_data:
+        print("No match for '" + ingredient + "', '" + match[0][0] + \
+                  "' closest (" + str(match[0][1]) + ")")
+        return None
         
+# Classify a recipe as a specific cuisine
+def bayes_classify(recipe, cuisines):
+    # Pick cuisine with highest relative probability
+    best = 0
+    best_cuisine = None
+    # Check every cuisine
+    for cuisine in cuisines:
+        print(cuisine.num_recipes, G_TOTAL_RECIPES)
+        # Compute relative probability
+        relative_prob = float(cuisine.num_recipes / G_TOTAL_RECIPES)
+        for ingredient in recipe['ingredients']:
+            # Find closest matching ingredient
+            ing_match = match_ingredient(ingredient, cuisine)
+            # If no good match for ingredient, fudge it so relative probability
+            # doesn't go to zero
+            if ing_match == None:
+                relative_prob = relative_prob * float(1/cuisine.num_recipes)
+            # Otherwise, use the real number:
+            # recipes containing  ingredient in cuisine / recipes in cuisine
+            else:
+                relative_prob = relative_prob * \
+                    (float(cuisine.ingredients[ing_match]) / cuisine.num_recipes)
+        # Keep track of what has the highest relative probability
+        print(cuisine.name + ": " + str(relative_prob))
+        if relative_prob > best:
+            best = relative_prob
+            best_cuisine = cuisine
+    return best_cuisine
 
 def main():
-    similarity_threshold = 80
-    num_process = 10000.0
-    limit = 10
-
-    train_file = "train.json"
-
-    with open(train_file) as data_file:
+    # You could compute this each time from the list of cuisines, but that's
+    # unnecessary redundacy.  To safe some computation time, make it global
+    global G_TOTAL_RECIPES
+    # Name of the training data, this really should be validation data, not
+    # the training data
+    G_TRAIN_FILE = "train.json"
+    train_data = None
+    # Load the cuisines from the training data
+    cuisines = open_cuisines()
+    # Compute total number of recipes from number of recipes in each cuisine
+    G_TOTAL_RECIPES = 0
+    for cuisine in cuisines:
+        G_TOTAL_RECIPES += cuisine.num_recipes
+    # Open this as training data, but its being used as validation data
+    with open(G_TRAIN_FILE) as data_file:
         train_data = json.load(data_file)
-    count = 0
+
+    # Keep track of our score
     correct = 0
-    cuisine_correct = {}
-    cuisine_incorrect= {}
+    incorrect = 0
+    # this really should be run on validation data, not training data
     for unclassified in train_data:
-        best = {}
-        for ingredient in unclassified['ingredients']:
-            best_match = (None,0,0)
-            for cuisine in cuisines:
-                choice = process.extract(ingredient,cuisine.ingredients.keys())
-                if choice[0][1] < similarity_threshold:
-                    continue
-                choice = best_choice(choice,cuisine)
-                if choice[1] == best_match[1]:
-                    best_match = evaluate_choice(choice,best_match,cuisine)
-                if choice[1] > best_match[1]:
-                    best_match = (cuisine.name ,choice[1],cuisine.ingredient_percent(choice[0])*choice[1],choice[0],cuisine)
-
-        #print(str(best_choice )+ " : " + ingredient)
-        #print(best_match)
-            if best_match[0] == None:
-                continue
-            if best.has_key(best_match[0]):
-                best[best_match[0]] += best_match[2]
-            else:
-                best[best_match[0]] = best_match[2]
-
-        best = sorted(best.items(), key=lambda x:x[1],reverse=True)
-    #print(best)
-        if len(best) == 0:
-            continue
-        classification = best[0][0]
-        if classification == unclassified['cuisine']:
-            if cuisine_correct.has_key(classification):
-                cuisine_correct[classification] += 1
-            else:
-                cuisine_correct[classification] = 1
+        # Find the cuisine that matches best with naive bayesian analysis
+        match = bayes_classify(unclassified, cuisines)
+        print("T: " + unclassified['cuisine'] + "\tP: " + str(match))
+        if match.name == unclassified['cuisine']:
             correct += 1
         else:
-            if cuisine_incorrect.has_key(classification):
-                cuisine_incorrect[classification] += 1
-            else:
-                cuisine_incorrect[classification] = 1
-    #else:
-        #print(str(best[0])+ " != "+ unclassified['cuisine'])
-
-        if count > num_process:
-            break
-        elif count % 5:
-            print(count / num_process)
-        count += 1
-
-    print(correct)
-    print("Correct: "+str(sorted(cuisine_correct.items(), key=lambda x:x[0],reverse=True)))
-    print("Incorrect: "+str(sorted(cuisine_incorrect.items(), key=lambda x:x[0])))
-    print("total correct: " + str(float(correct)/count))
-
-def bayes_classify(recipe, cuisines):
-    best = 0
-    best_cuisine = NULL
-    for cuisine in cuisines:
-        for ingredient in recipe.ingredients:
-            
-        relative_prob = float(cuisine.num_recipes / total_recipes)
-
-def main():
-    cuisines = open_cuisines()
-    total_recipes = 0
-    num_cuisines = len(cuisines)
-    for cuisine in cuisines:
-        total_recipes += cuisine.num_recipes
-    with open(train_file) as data_file:
-        train_data = json.load(data_file)
-    for unclassified in train_data:
-        match = bayes_classify(unclassified, cuisines)
+            incorrect += 1
+        if correct + incorrect % 1000 == 0:
+            print(str(correct + incorrect) + ":\tc:" + str(correct) + "\ti:" +\
+                      str(incorrect))
 
 if __name__ == "__main__":
     main()
