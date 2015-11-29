@@ -1090,7 +1090,8 @@
                 "capers", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 667
     }, 
     {
         "cuisine": "mexican", 
@@ -3147,7 +3148,8 @@
                 "crushed cheese crackers", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 6438
     }, 
     {
         "cuisine": "chinese", 
@@ -4876,7 +4878,8 @@
                 "Chinese rice vinegar", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 2673
     }, 
     {
         "cuisine": "filipino", 
@@ -5925,7 +5928,8 @@
                 "frozen peas and carrots", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 755
     }, 
     {
         "cuisine": "vietnamese", 
@@ -7334,7 +7338,8 @@
                 "rotisserie chicken", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 825
     }, 
     {
         "cuisine": "moroccan", 
@@ -8435,7 +8440,8 @@
                 "soy sauce", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 821
     }, 
     {
         "cuisine": "brazilian", 
@@ -9780,7 +9786,8 @@
                 "sesame seeds", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 467
     }, 
     {
         "cuisine": "japanese", 
@@ -11493,7 +11500,8 @@
                 "Chartreuse Liqueur", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 1423
     }, 
     {
         "cuisine": "british", 
@@ -12970,7 +12978,8 @@
                 "liver", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 804
     }, 
     {
         "cuisine": "greek", 
@@ -14427,7 +14436,8 @@
                 "radishes", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 1175
     }, 
     {
         "cuisine": "indian", 
@@ -16160,7 +16170,8 @@
                 "hing (powder)", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 3003
     }, 
     {
         "cuisine": "jamaican", 
@@ -17409,7 +17420,8 @@
                 "red snapper", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 526
     }, 
     {
         "cuisine": "french", 
@@ -19562,7 +19574,8 @@
                 "tarragon vinegar", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 2646
     }, 
     {
         "cuisine": "spanish", 
@@ -21023,7 +21036,8 @@
                 "quinoa", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 989
     }, 
     {
         "cuisine": "russian", 
@@ -21904,7 +21918,8 @@
                 "dry red wine", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 489
     }, 
     {
         "cuisine": "cajun_creole", 
@@ -23253,7 +23268,8 @@
                 "cream", 
                 2
             ]
-        ]
+        ], 
+        "num_recipes": 1546
     }, 
     {
         "cuisine": "thai", 
@@ -24874,7 +24890,8 @@
                 "cooking cream", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 1539
     }, 
     {
         "cuisine": "southern_us", 
@@ -27019,7 +27036,8 @@
                 "fryer chickens", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 4320
     }, 
     {
         "cuisine": "korean", 
@@ -28244,7 +28262,8 @@
                 "baking soda", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 830
     }, 
     {
         "cuisine": "italian", 
@@ -30793,6 +30812,7 @@
                 "english cucumber", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 7838
     }
 ]

@@ -14,7 +14,7 @@ k = 15
 while k < 50:
     print(k)
     for cuisine in cuisines:
-    #    print(cuisine.name + "\t\t:\t"),
+        print(cuisine.name + "\t\t:\t"),
         i = 0
         percentage = 0
         for ingredient in sorted(cuisine.ingredients.items(), key=lambda x:x[1],reverse=True):

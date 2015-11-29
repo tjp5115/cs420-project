@@ -67,17 +67,9 @@ for cuisine in cuisines:
         print(threshold)
         print("size:"+str(len(cuisine.ingredients)))
 
-
-
-
 cuisine_json = []
 for i in range(len(cuisines)):
     cuisine_json.append(cuisines[i].json_dump())
 
 with open("Ingredients_Cleaned.json","w") as outfile:
     json.dump(cuisine_json,outfile,indent=4,sort_keys=True)
-
-
-
-
-
