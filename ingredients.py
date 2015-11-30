@@ -27,6 +27,7 @@ for recipe in data:
 
         for ingredient in recipe['ingredients']:
             cuisine[name].add_ingredient(ingredient)
+        cuisine[name].inc_num_recipes()
         c += 1
         if c % 5000 == 0:
             print("Current time counter: "+get_elapsed_time())

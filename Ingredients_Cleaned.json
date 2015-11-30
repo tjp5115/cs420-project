@@ -946,7 +946,8 @@
                 "black olives", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 6438
     }, 
     {
         "cuisine": "chinese", 
@@ -1408,6 +1409,10 @@
                 11
             ], 
             [
+                "daikon", 
+                11
+            ], 
+            [
                 "thai basil", 
                 11
             ], 
@@ -1421,10 +1426,6 @@
             ], 
             [
                 "curry powder", 
-                11
-            ], 
-            [
-                "daikon", 
                 11
             ], 
             [
@@ -1472,11 +1473,11 @@
                 9
             ], 
             [
-                "red food coloring", 
+                "sliced carrots", 
                 9
             ], 
             [
-                "sliced carrots", 
+                "red food coloring", 
                 9
             ], 
             [
@@ -1771,7 +1772,8 @@
                 "egg noodles", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 2673
     }, 
     {
         "cuisine": "filipino", 
@@ -2360,7 +2362,8 @@
                 "sweet rice", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 755
     }, 
     {
         "cuisine": "vietnamese", 
@@ -2953,7 +2956,8 @@
                 "fresh mint", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 825
     }, 
     {
         "cuisine": "moroccan", 
@@ -3458,7 +3462,8 @@
                 "hand", 
                 2
             ]
-        ]
+        ], 
+        "num_recipes": 821
     }, 
     {
         "cuisine": "brazilian", 
@@ -3991,7 +3996,8 @@
                 "white beans", 
                 2
             ]
-        ]
+        ], 
+        "num_recipes": 467
     }, 
     {
         "cuisine": "japanese", 
@@ -4800,7 +4806,8 @@
                 "pak choi", 
                 2
             ]
-        ]
+        ], 
+        "num_recipes": 1423
     }, 
     {
         "cuisine": "british", 
@@ -5481,7 +5488,8 @@
                 "white bread", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 804
     }, 
     {
         "cuisine": "greek", 
@@ -6146,7 +6154,8 @@
                 "fresh oregano", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 1175
     }, 
     {
         "cuisine": "indian", 
@@ -6959,7 +6968,8 @@
                 "fresh mint", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 3003
     }, 
     {
         "cuisine": "jamaican", 
@@ -7253,11 +7263,11 @@
                 7
             ], 
             [
-                "curry", 
+                "condensed milk", 
                 7
             ], 
             [
-                "condensed milk", 
+                "curry", 
                 7
             ], 
             [
@@ -7381,6 +7391,10 @@
                 2
             ], 
             [
+                "light cream cheese", 
+                2
+            ], 
+            [
                 "garam masala", 
                 2
             ], 
@@ -7390,6 +7404,10 @@
             ], 
             [
                 "dry white wine", 
+                2
+            ], 
+            [
+                "fruit", 
                 2
             ], 
             [
@@ -7409,10 +7427,6 @@
                 2
             ], 
             [
-                "light cream cheese", 
-                2
-            ], 
-            [
                 "cheddar cheese", 
                 2
             ], 
@@ -7421,14 +7435,11 @@
                 2
             ], 
             [
-                "fruit", 
-                2
-            ], 
-            [
                 "seeds", 
                 2
             ]
-        ]
+        ], 
+        "num_recipes": 526
     }, 
     {
         "cuisine": "french", 
@@ -8461,7 +8472,8 @@
                 "swiss cheese", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 2646
     }, 
     {
         "cuisine": "spanish", 
@@ -9190,7 +9202,8 @@
                 "green olives", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 989
     }, 
     {
         "cuisine": "russian", 
@@ -9699,7 +9712,8 @@
                 "veal", 
                 2
             ]
-        ]
+        ], 
+        "num_recipes": 489
     }, 
     {
         "cuisine": "cajun_creole", 
@@ -10229,6 +10243,10 @@
                 5
             ], 
             [
+                "jambalaya mix", 
+                5
+            ], 
+            [
                 "beaten eggs", 
                 5
             ], 
@@ -10246,10 +10264,6 @@
             ], 
             [
                 "fresh spinach", 
-                5
-            ], 
-            [
-                "jambalaya mix", 
                 5
             ], 
             [
@@ -10372,7 +10386,8 @@
                 "shells", 
                 2
             ]
-        ]
+        ], 
+        "num_recipes": 1546
     }, 
     {
         "cuisine": "thai", 
@@ -11049,7 +11064,8 @@
                 "basil leaves", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 1539
     }, 
     {
         "cuisine": "southern_us", 
@@ -12122,7 +12138,8 @@
                 "apple juice", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 4320
     }, 
     {
         "cuisine": "korean", 
@@ -12615,7 +12632,8 @@
                 "ground beef", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 830
     }, 
     {
         "cuisine": "italian", 
@@ -12801,15 +12819,15 @@
                 126
             ], 
             [
-                "bacon", 
-                125
-            ], 
-            [
                 "anchovy fillets", 
                 125
             ], 
             [
                 "spinach", 
+                125
+            ], 
+            [
+                "bacon", 
                 125
             ], 
             [
@@ -13185,11 +13203,11 @@
                 34
             ], 
             [
-                "raisins", 
+                "radicchio", 
                 34
             ], 
             [
-                "radicchio", 
+                "raisins", 
                 34
             ], 
             [
@@ -13904,7 +13922,8 @@
                 "clam juice", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 7838
     }, 
     {
         "cuisine": "irish", 
@@ -14402,10 +14421,6 @@
                 2
             ], 
             [
-                "light butter", 
-                2
-            ], 
-            [
                 "marmalade", 
                 2
             ], 
@@ -14421,6 +14436,7 @@
                 "sour cream", 
                 1
             ]
-        ]
+        ], 
+        "num_recipes": 667
     }
 ]

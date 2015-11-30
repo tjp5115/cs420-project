@@ -6,12 +6,18 @@ class Cuisine:
         self.name = name
         self.ingredients = {}
         self.ingredients_added = 0
+        self.num_recipes = 0
 
     def init_json(self, data):
         self.name = data['cuisine']
         self.ingredients = dict(data['ingredients'])
         self.ingredients_added = sum(self.ingredients.values())
+        self.num_recipes = int(data['num_recipes'])
         return self
+
+    # Increments the number of recipes included in this cuisine
+    def inc_num_recipes(self):
+        self.num_recipes += 1
 
     def trim(self):
         sorted_ingredients = sorted(self.ingredients.items(), key=lambda x:x[1])
@@ -20,6 +26,8 @@ class Cuisine:
                 break
             del self.ingredients[ ingredient[0] ]
 
+    # Returns the percentage of recipes in this cuisine containing a given
+    # ingredient
     def ingredient_percent(self,ingredient):
         if not self.ingredients.has_key(ingredient):
             return None
@@ -56,6 +64,7 @@ class Cuisine:
     def json_dump(self):
         sorted_x = sorted(self.ingredients.items(), key=lambda x:x[1],reverse=True)
         return {'cuisine':self.name,
+                'num_recipes':self.num_recipes,
                 'ingredients':sorted_x
                 }
 
