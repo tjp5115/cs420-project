@@ -80,8 +80,20 @@ def classify(num_process, similarity_threshold, limit):
             #print(str(best[0])+ " != "+ unclassified['cuisine'])
         count += 1
 
-    print("Correct: "+str(sorted(cuisine_correct)))
-    print("Incorrect: "+str(sorted(cuisine_incorrect)))
+    cuisine_misclassification = {}
+    for cuisine in cuisine_correct:
+        correct = 0.0
+        incorrect = 0.0
+        if cuisine_correct.has_key(cuisine):
+            correct = float( cuisine_correct[cuisine] )
+
+        if cuisine_incorrect.has_key(cuisine):
+            incorrect = cuisine_incorrect[cuisine]
+        cuisine_misclassification[cuisine] = incorrect / (correct + incorrect)
+
+    print("Correct: "+str(sorted(cuisine_correct.items(), key=lambda x:x[1])))
+    print("Incorrect: "+str(sorted(cuisine_incorrect.items(), key=lambda x:x[1],reverse=True)))
+    print("misclassification: " + str(sorted(cuisine_misclassification.items(), key=lambda x:x[1])))
     print("total correct: " + str(float(correct)/count))
     return float(correct)/count
 """
