@@ -1,9 +1,12 @@
 __author__ = 'Tyler Paulsen'
 from Cuisine import Cuisine
 import json
-import random
 from fuzzywuzzy import process
 from fuzzywuzzy import fuzz
+
+
+# this file is the same classifier as in CuisineClassifier.py, just for the actual submission to Kaggle.
+# if you want to know what is going on, read the comments for the CuisineClassifier.
 
 def evaluate_choice(choice,best_choice,cuisine):
     c1 = cuisine.ingredient_percent(choice[0])
@@ -38,7 +41,7 @@ for i in range(len(data)):
     cuisines[i].trim_limit(limit)
 count = 0
 cuisine_correct = {}
-cuisine_incorrect= {}
+cuisine_incorrect = {}
 for unclassified in test_data:
     best = {}
     for ingredient in unclassified['ingredients']:

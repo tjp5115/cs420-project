@@ -14,3 +14,21 @@ Packages installed:
 	pywin32	218	214
 	scipy	0.13.3	0.16.1
 	setuptools	16.0	18.5
+
+
+File descriptions:
+
+bayes_classifier.py 	- 	classifier using the bayes method
+cleanIngredients.py 	-	Cleans the new ingredients file creates from the train.json
+Cuisine.py 				-	Class that is a wrapper for the json file. Each cuisine has a list of ingredients, and how popular that ingredient is for the cuisine
+CuisineClassifier.py 	-	Simple classifier. Takes an unidentidied cuisine, looks at its ingredient, and picks a cuisine that it maps to the best.
+CuisineClassifierTest.py-	Same as CuisineClassifier.py, but it is used in the test data provided. Used to submit to Kaggle.
+ExploringIngredients.py -	Takes a look at the ingredients for each of the cuisine. Uses the Ingredients.json file.
+ingredients 			-	submission to Kaggle.com with the classified test.json data.
+Ingredients.json		-	List of cuisines with their top ~500 ingredients.
+ingredients.py 			- 	creates the Ingredients.json file. Takes a long time to run. Loops through all the train.json data, and creates the Ingredients.json.
+Ingredients_Cleaned.json-	Created the cleanIngredients.py - Removed common ingredients between cuisines, and removed common ingredients within a cuisine.
+sources.txt 			- 	different sources used throughout the process.
+test.json 				-	test data provided by Kaggle
+train.json				-	training data provided by Kaggle
+submission.cvs 			- 	submission to Kaggle.com with the classified test.json data.

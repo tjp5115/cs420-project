@@ -2,6 +2,9 @@ __author__ = 'Tyler Paulsen'
 from Cuisine import Cuisine
 import json
 
+# Script that explores the ingredients from the list of cleaned ingredients.
+# To see what the list of cleaned ingredients consists of, read
+
 cuisines = []
 file = "Ingredients_Cleaned.json"
 with open(file) as data_file:
@@ -18,7 +21,6 @@ while k < 50:
         i = 0
         percentage = 0
         for ingredient in sorted(cuisine.ingredients.items(), key=lambda x:x[1],reverse=True):
-            #print(str(ingredient)+"\t"),
             percentage += ingredient[1]
             if i > k:
                 break

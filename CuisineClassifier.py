@@ -5,6 +5,8 @@ import random
 from fuzzywuzzy import process
 from fuzzywuzzy import fuzz
 
+# evaluate the choice, and return the best one.
+# the best one is the choice that has the most weight in the list of ingredients
 def evaluate_choice(choice,best_choice,cuisine):
     c1 = cuisine.ingredient_percent(choice[0])
     c2 = best_choice[4].ingredient_percent(best_choice[3])
@@ -13,15 +15,23 @@ def evaluate_choice(choice,best_choice,cuisine):
     else:
         return (cuisine.name ,choice[1],cuisine.ingredient_percent(choice[0])*choice[1],choice[0],cuisine)
 
+# returns the best choice from the extracted list of similar words
 def best_choice(choice,cuisine):
     best = choice[0]
     i = 0
+    # loops through the top percentages that are the same i.e. al;l the 90% similar words
     while best[1] == choice[i][1] and len(choice) < i:
+        # get the ingredient with the most weight in the list.
         if cuisine.ingredient_percent(best[0]) < cuisine.ingredient_percent(choice[i][0]):
             best = choice[i]
         i += 1
     return best
 
+# classify the list by what cuisine is the best choice for a given ingredient
+# a weight is added up for each cuisine, and the highest one is the winner.
+# @num_process - number of cuisines fromt he test set to process
+# @similarity_threshold - how similar should two ingredients be in order to add it to the classifiers score
+# @limit - number of ingredients to limit each cuisine's number of ingredients by.
 def classify(num_process, similarity_threshold, limit):
     train_file = "train.json"
     with open(train_file) as data_file:
@@ -37,34 +47,46 @@ def classify(num_process, similarity_threshold, limit):
     correct = 0
     cuisine_correct = {}
     cuisine_incorrect= {}
+    # get a random sample of data of the size given
     for unclassified in random.sample(train_data, int(num_process)):
         best = {}
+        # loop through all the ingredients for the unclassified cuisine
         for ingredient in unclassified['ingredients']:
             best_match = (None,0,0)
+            # loop through each cuisines we have classified, and use their bag of words to classify them.
             for cuisine in cuisines:
-                choice = process.extract(ingredient,cuisine.ingredients.keys(),scorer=fuzz.QRatio,)
+                # find the best match to the ingredient
+                choice = process.extract(ingredient,cuisine.ingredients.keys(),scorer=fuzz.QRatio)
+                # do not continue to process if it is not above the thresold
                 if choice[0][1] < similarity_threshold:
                     continue
+                # get the best choice -- read method call comments
                 choice = best_choice(choice,cuisine)
+                # if two ingredients are the same for two cuisines, take the best match -- read method call comments
                 if choice[1] == best_match[1]:
                     best_match = evaluate_choice(choice,best_match,cuisine)
+                # add a new best match if the similarity is greater.
                 if choice[1] > best_match[1]:
                     best_match = (cuisine.name ,choice[1],cuisine.ingredient_percent(choice[0])*choice[1],choice[0],cuisine)
 
-            #print(str(best_choice )+ " : " + ingredient)
-            #print(best_match)
+            # if there is no best match, continue
             if best_match[0] == None:
                 continue
+            # add to a cuisine's score ((% of ingredients in cuisine) * (% of similarity from fuzzywuzzy))
             if best.has_key(best_match[0]):
                 best[best_match[0]] += best_match[2]
             else:
                 best[best_match[0]] = best_match[2]
 
+        # get the cuisine with the highest score
         best = sorted(best.items(), key=lambda x:x[1],reverse=True)
-        #print(best)
+        # if there was no best score, continue
         if len(best) == 0:
             continue
         classification = best[0][0]
+
+        # bookkeeping.
+        # see if we classified correctly
         if classification == unclassified['cuisine']:
             if cuisine_correct.has_key(classification):
                 cuisine_correct[classification] += 1
@@ -76,11 +98,10 @@ def classify(num_process, similarity_threshold, limit):
                 cuisine_incorrect[classification] += 1
             else:
                 cuisine_incorrect[classification] = 1
-        #else:
-            #print(str(best[0])+ " != "+ unclassified['cuisine'])
         count += 1
 
     cuisine_misclassification = {}
+    # get the misclassification rate of the run.
     for cuisine in cuisine_correct:
         correct = 0.0
         incorrect = 0.0

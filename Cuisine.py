@@ -19,6 +19,7 @@ class Cuisine:
     def inc_num_recipes(self):
         self.num_recipes += 1
 
+    # trims the ingredients on some threshold constant.
     def trim(self):
         sorted_ingredients = sorted(self.ingredients.items(), key=lambda x:x[1])
         for ingredient in sorted_ingredients:
@@ -33,6 +34,7 @@ class Cuisine:
             return None
         return float(self.ingredients[ingredient]) / self.ingredients_added
 
+    # trim the list to some amount
     def trim_limit(self,limit):
         self.ingredients = dict(sorted(self.ingredients.items(), key=lambda x:x[1],reverse=True)[:limit])
         self.ingredients_added = sum(self.ingredients.values())
@@ -47,6 +49,7 @@ class Cuisine:
 
         self.ingredients_added = sum(self.ingredients.values())
 
+    # add ingredient to the list
     def add_ingredient(self,ingredient):
         self.ingredients_added += 1
         # trim the list to fuzzy search every so often.
@@ -54,6 +57,7 @@ class Cuisine:
             print(self.name + " : " +str(self.ingredients_added))
             self.trim()
         choice = process.extract(ingredient, self.ingredients.keys())
+        # add to an existing ingredient id more than 90% similar to another ingredient else, create a new one
         if len(choice) == 0:
             self.ingredients[ingredient] = 1
         elif choice[0][1] > 90:
@@ -61,6 +65,7 @@ class Cuisine:
         else:
             self.ingredients[ingredient] = 1
 
+    # helper function to create a json file from the class data
     def json_dump(self):
         sorted_x = sorted(self.ingredients.items(), key=lambda x:x[1],reverse=True)
         return {'cuisine':self.name,
@@ -68,6 +73,7 @@ class Cuisine:
                 'ingredients':sorted_x
                 }
 
+    # remove ingredient from the list
     def remove_ingredient(self,ingredient):
         if self.ingredients.has_key(ingredient):
             del self.ingredients[ingredient]
