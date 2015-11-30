@@ -1,10 +1,12 @@
-__author__ = 'Tyler Paulsen'
+__author__ = 'Alexander Bobowski'
 from Cuisine import Cuisine
 import json
 import math
 from fuzzywuzzy import process
 
 global G_TOTAL_RECIPES
+global G_DEBUG
+G_DEBUG = False
 
 # Opens the list of cleaned ingredients, returns the map of cuisines
 def open_cuisines():
@@ -28,7 +30,8 @@ def match_ingredient(ingredient, cuisine):
     if match[0][1] >= G_ING_SIMILARITY_THRESHOLD:
         return match[0][0]
     else:
-        print("No match for '" + ingredient + "', '" + match[0][0] + \
+        if G_DEBUG:
+            print("No match for '" + ingredient + "', '" + match[0][0] + \
                   "' closest (" + str(match[0][1]) + ")")
         return None
         
@@ -39,23 +42,21 @@ def bayes_classify(recipe, cuisines):
     best_cuisine = None
     # Check every cuisine
     for cuisine in cuisines:
-        print(cuisine.num_recipes, G_TOTAL_RECIPES)
         # Compute relative probability
-        relative_prob = float(cuisine.num_recipes / G_TOTAL_RECIPES)
+        relative_prob = float(cuisine.num_recipes) / float(G_TOTAL_RECIPES)
         for ingredient in recipe['ingredients']:
             # Find closest matching ingredient
             ing_match = match_ingredient(ingredient, cuisine)
             # If no good match for ingredient, fudge it so relative probability
             # doesn't go to zero
             if ing_match == None:
-                relative_prob = relative_prob * float(1/cuisine.num_recipes)
+                relative_prob = relative_prob * float(1)/float(cuisine.num_recipes)
             # Otherwise, use the real number:
             # recipes containing  ingredient in cuisine / recipes in cuisine
             else:
                 relative_prob = relative_prob * \
                     (float(cuisine.ingredients[ing_match]) / cuisine.num_recipes)
         # Keep track of what has the highest relative probability
-        print(cuisine.name + ": " + str(relative_prob))
         if relative_prob > best:
             best = relative_prob
             best_cuisine = cuisine
@@ -86,14 +87,17 @@ def main():
     for unclassified in train_data:
         # Find the cuisine that matches best with naive bayesian analysis
         match = bayes_classify(unclassified, cuisines)
-        print("T: " + unclassified['cuisine'] + "\tP: " + str(match))
+        if G_DEBUG:
+            print("T: " + unclassified['cuisine'] + "\tP: " + match.name)
         if match.name == unclassified['cuisine']:
             correct += 1
         else:
             incorrect += 1
-        if correct + incorrect % 1000 == 0:
-            print(str(correct + incorrect) + ":\tc:" + str(correct) + "\ti:" +\
-                      str(incorrect))
+        total = correct + incorrect
+        if total % 10 == 0:
+            print(str(correct + incorrect) + "|\tc:" + str(correct) + "\ti:" +\
+                  str(incorrect) + "\tr: " + \
+                  str(float(correct) / (correct + incorrect)))
 
 if __name__ == "__main__":
     main()
